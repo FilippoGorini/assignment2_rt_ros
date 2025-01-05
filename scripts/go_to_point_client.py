@@ -5,10 +5,13 @@ import actionlib
 from nav_msgs.msg import Odometry
 from assignment_2_2024.msg import PlanningAction, PlanningGoal
 from assignment2_rt_ros.msg import RobotState                       # Import the custom state message
+import sys
+import select
 
 
+# This is the callback function called when new data is available on the subscribed /odom topic. It extracts position ...
+# ... and velocity data from the odometry message and publishes it as a new RobotState message on the /robot_state topic
 def odom_callback(msg):
-    """Callback function for odometry subscriber to extract position and velocity."""
     robot_state = RobotState()                                      # Define an empty RobotState message
     robot_state.x = msg.pose.pose.position.x                        # Get position and velocities from the Odometry message
     robot_state.y = msg.pose.pose.position.y
@@ -17,46 +20,58 @@ def odom_callback(msg):
     pub_state.publish(robot_state)                                  # Publish every time new data is received on /odom topic and this callback is triggered
 
 
+# This function implements a loop that prompts the user for a target point, while allowing it to cancel it at any time ...
+# ... by typing "c" and "Enter". 
 def send_goal():
-    """Prompt the user for a goal and send it to the action server."""
     while not rospy.is_shutdown():
-        x = float(input("Enter target x: "))
-        y = float(input("Enter target y: "))
+        while True:      
+            try:                                                    # Try converting the input to float to be sure the user entered a number
+                x = float(input("\nEnter target x: "))  
+                y = float(input("Enter target y: "))
+                break                                               # Break if otherwise he entered a string that can't be converted to float
+            except ValueError: 
+                print("\nINVALID INPUT!: Please enter numeric values for x and y")
 
         goal = PlanningGoal()                                       # Define an empty action goal message
         goal.target_pose.pose.position.x = x                        # Set goal x
         goal.target_pose.pose.position.y = y                        # Set goal y
 
-        client.send_goal(goal, feedback_cb=feedback_callback)       # Send the goal to the action server using feedback_callback as callback ...
-                                                                    # ... for when the server updates the feedback topic
+        client.send_goal(goal)                                      # Send the goal to the action server
+        print("\nGoal sent! Press 'c' and Enter to cancel the goal")
 
-        print("Goal sent. Type 'cancel' to stop execution or wait for completion.")
+        # In the following loop, we didn't use the usual input() function because it would have blocked the terminal ...
+        # ... waiting for user input, not checking if the goal was reached in the meanwhile. This code instead uses ...
+        # ... the select.select system call to check if the user has typed something but doesn't wait (timeout is set to 0)
+        while client.get_state() not in [actionlib.GoalStatus.SUCCEEDED, actionlib.GoalStatus.ABORTED, actionlib.GoalStatus.PREEMPTED]:  
+            if select.select([sys.stdin], [], [], 0)[0]:            # Check if there is user input available WITHOUT blocking execution  
+                user_input = sys.stdin.readline().strip()           # Read the input (non-blocking because of select)  
+                if user_input.lower() == 'c':                       # If the user types 'c', cancel the goal  
+                    client.cancel_goal()
+                    print("\nGoal was canceled!")  
+                    break                                           # Exit the loop since the goal has been canceled  
 
-        while client.get_state() != actionlib.GoalStatus.SUCCEEDED:
-            user_input = input()
-            if user_input.lower() == 'cancel':
-                client.cancel_goal()
-                print("Goal canceled.")
-                break
-
-
-def feedback_callback(feedback):
-    """Callback function to display action server feedback."""
-    if client.get_state() == actionlib.GoalStatus.SUCCEEDED:
-        print("Target reached!")
-
+        if client.get_state() == actionlib.GoalStatus.SUCCEEDED:
+            print("\nGoal reached successfully!")
 
 
-if __name__ == "__main__":
+# This is the main function of the node, that initializes a client for the /reaching_goal action server, plus a subscriber ...
+# ... and a publisher to monitor the state of the robot
+def main():
+
+    global sub_odom, pub_state, client
     rospy.init_node("go_to_point_client")
 
     client = actionlib.SimpleActionClient("/reaching_goal", PlanningAction)     # Setup the action client
-    print("Waiting for action server...")
+    print("\nWaiting for action server...")
     client.wait_for_server()
     print("Connected to action server!")
 
-    pub_state = rospy.Publisher("/robot_state", RobotState, queue_size=10)      # Setup publisher for the robot state
     sub_odom = rospy.Subscriber("/odom", Odometry, odom_callback)               # Setup the subscriber to the /odom topic
+    pub_state = rospy.Publisher("/robot_state", RobotState, queue_size=10)      # Setup publisher for the robot state
 
-    while not rospy.is_shutdown():                                      # Because of the loop, no spin function is required (at least here in python)
+    while not rospy.is_shutdown():                                              # Because of the loop, no spin function is required (at least here in python)
         send_goal()
+
+
+if __name__ == "__main__":
+    main()
