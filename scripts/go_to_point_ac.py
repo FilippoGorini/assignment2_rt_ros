@@ -4,7 +4,7 @@ import rospy
 import actionlib
 from nav_msgs.msg import Odometry
 from assignment_2_2024.msg import PlanningAction, PlanningGoal
-from assignment2_rt_ros.msg import RobotState                       # Import the custom state message
+from assignment2_rt_ros.msg import RobotState, Target          
 import sys
 import select
 
@@ -16,13 +16,13 @@ def odom_callback(msg):
     robot_state.x = msg.pose.pose.position.x                        # Get position and velocities from the Odometry message
     robot_state.y = msg.pose.pose.position.y
     robot_state.vel_x = msg.twist.twist.linear.x
-    robot_state.vel_z = msg.twist.twist.angular.z
+    robot_state.ang_vel_z = msg.twist.twist.angular.z               # Angular velocity, not linear!
     pub_state.publish(robot_state)                                  # Publish every time new data is received on /odom topic and this callback is triggered
-
 
 # This function implements a loop that prompts the user for a target point, while allowing it to cancel it at any time ...
 # ... by typing "c" and "Enter". 
 def send_goal():
+
     while not rospy.is_shutdown():
         while True:      
             try:                                                    # Try converting the input to float to be sure the user entered a number
@@ -32,12 +32,14 @@ def send_goal():
             except ValueError: 
                 print("\nINVALID INPUT!: Please enter numeric values for x and y")
 
+        pub_target.publish(Target(x, y))                            # Publish last target point set by the user using custom target message
+
         goal = PlanningGoal()                                       # Define an empty action goal message
         goal.target_pose.pose.position.x = x                        # Set goal x
         goal.target_pose.pose.position.y = y                        # Set goal y
 
         client.send_goal(goal)                                      # Send the goal to the action server
-        print("\nGoal sent! Press 'c' and Enter to cancel the goal")
+        print("\nGoal sent! Press 'c' and then 'Enter' to cancel the goal")
 
         # In the following loop, we didn't use the usual input() function because it would have blocked the terminal ...
         # ... waiting for user input, not checking if the goal was reached in the meanwhile. This code instead uses ...
@@ -45,7 +47,7 @@ def send_goal():
         while client.get_state() not in [actionlib.GoalStatus.SUCCEEDED, actionlib.GoalStatus.ABORTED, actionlib.GoalStatus.PREEMPTED]:  
             if select.select([sys.stdin], [], [], 0)[0]:            # Check if there is user input available WITHOUT blocking execution  
                 user_input = sys.stdin.readline().strip()           # Read the input (non-blocking because of select)  
-                if user_input.lower() == 'c':                       # If the user types 'c', cancel the goal  
+                if user_input.lower() == "c":                       # If the user types 'c', cancel the goal  
                     client.cancel_goal()
                     print("\nGoal was canceled!")  
                     break                                           # Exit the loop since the goal has been canceled  
@@ -53,13 +55,12 @@ def send_goal():
         if client.get_state() == actionlib.GoalStatus.SUCCEEDED:
             print("\nGoal reached successfully!")
 
-
 # This is the main function of the node, that initializes a client for the /reaching_goal action server, plus a subscriber ...
 # ... and a publisher to monitor the state of the robot
 def main():
 
-    global sub_odom, pub_state, client
-    rospy.init_node("go_to_point_client")
+    global sub_odom, pub_state, pub_target, client
+    rospy.init_node("go_to_point_ac_node")
 
     client = actionlib.SimpleActionClient("/reaching_goal", PlanningAction)     # Setup the action client
     print("\nWaiting for action server...")
@@ -68,6 +69,7 @@ def main():
 
     sub_odom = rospy.Subscriber("/odom", Odometry, odom_callback)               # Setup the subscriber to the /odom topic
     pub_state = rospy.Publisher("/robot_state", RobotState, queue_size=10)      # Setup publisher for the robot state
+    pub_target = rospy.Publisher("/last_target", Target, queue_size=10)         # Setup publisher for the last target
 
     while not rospy.is_shutdown():                                              # Because of the loop, no spin function is required (at least here in python)
         send_goal()
