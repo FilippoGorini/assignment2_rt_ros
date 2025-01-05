@@ -15,7 +15,9 @@ def handle_get_last_target(req):
     return GetLastTargetResponse(last_target)
 
 # This is the main function, which simply initializes a subscriber to the /last_target topic and implements the service server ...
-# ... which returns the last target sent when called
+# ... which returns the last target sent when called. A perhaps simpler approach would have been to subscribe to the ...
+# ... /reaching_goal/goal topic, as it would have avoided adding an additional publisher (/last_target) on the other node, ...
+# ... but I realized I could do that only later and anyway I like the compactness of returning just the x and y target
 def main():
 
     global last_target 
