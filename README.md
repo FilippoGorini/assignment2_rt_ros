@@ -1,6 +1,6 @@
 # RT1 Assignment 2 (ROS)
 This repository contains a ROS package implementing two nodes: `go_to_point_client.py` and `get_last_target.py`. 
-These nodes interact with the gazebo simulation provided in the package **assignment_2_2024** to control the robot movement towards a target in space set by the user.
+These nodes interact with the Gazebo simulation provided in the package **assignment_2_2024** to control the robot movement towards a target in space set by the user.
 
 ## Running the Nodes
 Ensure you have **ROS (Noetic or compatible)** and that the package **assignment_2_2024** is in your workspace.
@@ -42,22 +42,22 @@ Once the launchfile is executed, the node will automatically run and ask the use
 - Sends goal positions to the `bug_as.py` action server.
 - Allows to cancel the goal before the robot actually reaches the target.
 - Monitors feedback from the action server to determine when the goal has been reached.
-- Publishes the robot's position (x, y) and velocity (vel_x, vel_z) on the `/robot-state` topic, using the RobotState custom message.
+- Publishes the robot's position (x, y) and velocity (vel_x, vel_z) on the `/robot_state` topic, using the RobotState custom message.
 
 ### Code Structure
 The `go_to_point_ac.py` node code is structured into three main components:
 
-1. **main()**: Initializes the ROS node and sets up:
+- **`main()`**: Initializes the ROS node and sets up:
     - An action client for `/reaching_goal`.
     - A subscriber to `/odom` to store the latest data about the robot.
     - Publishers for `/robot_state` and `/last_target`.
     - Calls send_goal in an infinite loop until ROS shuts down.
 
-2. **odom_callback()**:
+- **`odom_callback()`**:
     - Extracts x, y, linear velocity (vel_x), and angular velocity (ang_vel_z).
     - Publishes the extracted information as a custom RobotState message on the /robot_state topic.
 
-3. **send_goal()**:
+- **`send_goal()`**:
     - Continuously prompts the user for a target position (x, y).
     - Publishes the target coordinates on the `/last_target` topic.
     - Sends the goal to the `/reaching_goal` action server.
@@ -80,11 +80,11 @@ rosservice call get_last_target
 - Responds to service calls with the last received goal.
 
 ### Code Structure
-The `get_last_target_srv.py` is quite simple, consisting of only three functions:
+The `get_last_target_srv.py` node is quite simple, consisting of only three functions:
 
-1. **main()**: Initializes the node, a subscriber to the `last_target` topic and the service itself (`get_last_target`).
-2. **target_callback()**: Stores the message received from the topic in a variable to be able to retrieve it later.
-3. **handle_get_last_target()**: When the service is called this function returns the last target set by the user.
+- **`main()`**: Initializes the node, a subscriber to the `last_target` topic and the service itself (`get_last_target`).
+- **`target_callback()`**: Stores the message received from the topic in a variable to be able to retrieve it later.
+- **`handle_get_last_target()`**: When the service is called this function returns the last target set by the user.
 
 
 
