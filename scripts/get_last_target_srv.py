@@ -5,21 +5,46 @@ from assignment2_rt_ros.msg import Target
 from assignment2_rt_ros.srv import GetLastTarget, GetLastTargetResponse
 
 
-# This callback function updates the last_target global variable every time new data is received on the /last_target topic
 def target_callback(msg):
-    global last_target
-    last_target = msg                              
+    """
+    Callback function for the `/last_target` topic.
 
-# This function returns the response the server should give back to the client who sent the request
+    This function is triggered every time new data is received on the `/last_target` topic.
+    It updates the global `last_target` variable with the new `Target` message.
+
+    Args:
+        msg (assignment2_rt_ros.msg.Target): The received `Target` message containing the target coordinates.
+    """
+    global last_target
+    last_target = msg
+
+
 def handle_get_last_target(req):
+    """
+    Handles a service request to get the last target.
+
+    This function returns the `last_target` message as the response to the client that called the service.
+
+    Args:
+        req (assignment2_rt_ros.srv.GetLastTargetRequest): The request message (not used in this case).
+
+    Returns:
+        GetLastTargetResponse: The response message containing the last target data.
+    """
     return GetLastTargetResponse(last_target)
 
-# This is the main function, which simply initializes a subscriber to the /last_target topic and implements the service server ...
-# ... which returns the last target sent when called. A perhaps simpler approach would have been to subscribe to the ...
-# ... /reaching_goal/goal topic, as it would have avoided adding an additional publisher (/last_target) on the other node, ...
-# ... but I realized I could do that only later and anyway I like the compactness of returning just the x and y target
-def main():
 
+def main():
+    """
+    Main function that initializes the ROS node and sets up the subscriber and service.
+
+    This function:
+    - Initializes the ROS node `get_last_target_srv_node`.
+    - Creates a subscriber to the `/last_target` topic to receive updates.
+    - Creates a service `get_last_target` that allows clients to request the last target.
+
+    The function then enters a loop with `rospy.spin()` to process incoming requests.
+    """
     global last_target 
     last_target = Target()
     rospy.init_node('get_last_target_srv_node')
@@ -27,7 +52,7 @@ def main():
     rospy.Subscriber('/last_target', Target, target_callback)
     rospy.Service('get_last_target', GetLastTarget, handle_get_last_target)
 
-    rospy.spin()                   
+    rospy.spin()
 
 
 if __name__ == "__main__":
