@@ -1,8 +1,18 @@
 #! /usr/bin/env python
 
-import rospy
-from assignment2_rt_ros.msg import Target
-from assignment2_rt_ros.srv import GetLastTarget, GetLastTargetResponse
+"""
+.. module:: get_last_target_srv
+   :platform: Unix
+   :synopsis: This module contains the code for the ROS1 package of the assignment 2.
+
+.. moduleauthor:: Gorini Filippo - s7852527@studenti.unige.it
+
+This is the service node written in Python for the assignment 2 of the research track course.
+"""
+
+# import rospy
+# from assignment2_rt_ros.msg import Target
+# from assignment2_rt_ros.srv import GetLastTarget, GetLastTargetResponse
 
 
 def target_callback(msg):

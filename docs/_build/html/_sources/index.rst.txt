@@ -19,13 +19,10 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-Scripts Documentation
-=====================
-
-.. automodule:: scripts.go_to_point_ac
+.. automodule:: go_to_point_ac
     :members:
     :undoc-members:
 
-.. automodule:: scripts.get_last_target_srv
+.. automodule:: get_last_target_srv
     :members:
     :undoc-members:

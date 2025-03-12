@@ -1,12 +1,22 @@
 #! /usr/bin/env python
 
-import rospy
-import actionlib
-from nav_msgs.msg import Odometry
-from assignment_2_2024.msg import PlanningAction, PlanningGoal
-from assignment2_rt_ros.msg import RobotState, Target          
-import sys
-import select
+"""
+.. module:: got_to_point_ac
+   :platform: Unix
+   :synopsis: This module contains the code for the ROS1 package of the assignment 2.
+
+.. moduleauthor:: Gorini Filippo - s7852527@studenti.unige.it
+
+This is the service node written in Python for the assignment 2 of the research track course.
+"""
+
+# import rospy
+# import actionlib
+# from nav_msgs.msg import Odometry
+# from assignment_2_2024.msg import PlanningAction, PlanningGoal
+# from assignment2_rt_ros.msg import RobotState, Target          
+# import sys
+# import select
 
 
 def odom_callback(msg):
