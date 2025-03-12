@@ -15,7 +15,7 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath('../scripts'))  # Set scripts path where to find the modules to document
+sys.path.insert(0, os.path.abspath('../../scripts'))  # Set scripts path where to find the modules to document
 
 # -- Project information -----------------------------------------------------
 

@@ -5,7 +5,7 @@
    :platform: Unix
    :synopsis: This module contains the code for the ROS1 package of the assignment 2.
 
-.. moduleauthor:: Gorini Filippo - s7852527@studenti.unige.it
+.. moduleauthor:: Gorini Filippo - s4828475@studenti.unige.it
 
 This is the service node written in Python for the assignment 2 of the research track course.
 """
