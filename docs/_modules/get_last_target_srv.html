@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>get_last_target_srv &mdash; assignment2_rt_ros  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            assignment2_rt_ros
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">assignment2_rt_ros</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">get_last_target_srv</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for get_last_target_srv</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /usr/bin/env python</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. module:: get_last_target_srv</span>
+<span class="sd">   :platform: Unix</span>
+<span class="sd">   :synopsis: ROS service node for retrieving the last target position.</span>
+
+<span class="sd">.. moduleauthor:: Gorini Filippo - s4828475@studenti.unige.it</span>
+
+<span class="sd">This node implements a ROS service that allows other nodes to retrieve the last target position</span>
+<span class="sd">set by the user. The last target is updated through a subscriber to the `/last_target` topic.</span>
+
+<span class="sd">**ROS Topics:**</span>
+<span class="sd">    - **Subscribes to**:</span>
+<span class="sd">        - `/last_target` (`assignment2_rt_ros.msg.Target`): Receives the latest target position.</span>
+
+<span class="sd">**ROS Service:**</span>
+<span class="sd">    - **Service Server**:</span>
+<span class="sd">        - `get_last_target` (`assignment2_rt_ros.srv.GetLastTarget`): Returns the last received target.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c1"># import rospy</span>
+<span class="c1"># from assignment2_rt_ros.msg import Target</span>
+<span class="c1"># from assignment2_rt_ros.srv import GetLastTarget, GetLastTargetResponse</span>
+
+<div class="viewcode-block" id="target_callback"><a class="viewcode-back" href="../index.html#get_last_target_srv.target_callback">[docs]</a><span class="k">def</span> <span class="nf">target_callback</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Callback function for the `/last_target` topic.</span>
+
+<span class="sd">    Updates the global `last_target` variable whenever a new `Target` message is received.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        msg (assignment2_rt_ros.msg.Target): The received target message containing position data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">last_target</span>
+    <span class="n">last_target</span> <span class="o">=</span> <span class="n">msg</span></div>
+
+<div class="viewcode-block" id="handle_get_last_target"><a class="viewcode-back" href="../index.html#get_last_target_srv.handle_get_last_target">[docs]</a><span class="k">def</span> <span class="nf">handle_get_last_target</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Service callback for the `get_last_target` service.</span>
+
+<span class="sd">    Returns the last received target position.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        req (assignment2_rt_ros.srv.GetLastTargetRequest): The service request (not used).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        GetLastTargetResponse: The response containing the last target position.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">GetLastTargetResponse</span><span class="p">(</span><span class="n">last_target</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../index.html#get_last_target_srv.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initializes the ROS node and sets up the subscriber and service.</span>
+
+<span class="sd">    - **Node Name**: `get_last_target_srv_node`</span>
+<span class="sd">    - **Subscribes to**: `/last_target` (`assignment2_rt_ros/Target`)</span>
+<span class="sd">    - **Provides Service**: `get_last_target` (`assignment2_rt_ros/GetLastTarget`)</span>
+
+<span class="sd">    The node continuously listens for new target positions and serves the last recorded target </span>
+<span class="sd">    through a ROS service.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">last_target</span>
+    <span class="n">last_target</span> <span class="o">=</span> <span class="n">Target</span><span class="p">()</span>
+
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;get_last_target_srv_node&#39;</span><span class="p">)</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s1">&#39;/last_target&#39;</span><span class="p">,</span> <span class="n">Target</span><span class="p">,</span> <span class="n">target_callback</span><span class="p">)</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s1">&#39;get_last_target&#39;</span><span class="p">,</span> <span class="n">GetLastTarget</span><span class="p">,</span> <span class="n">handle_get_last_target</span><span class="p">)</span>
+
+    <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Gorini Filippo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
