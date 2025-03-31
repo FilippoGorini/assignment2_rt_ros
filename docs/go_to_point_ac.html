@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Indices &mdash; assignment2_rt_ros  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>go_to_point_ac &mdash; assignment2_rt_ros  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
@@ -15,7 +15,9 @@
         <script type="text/javascript" src="_static/language_data.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="get_last_target_srv" href="get_last_target_srv.html" />
+    <link rel="prev" title="Modules" href="modules.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -26,7 +28,7 @@
 
           
           
-          <a href="#" class="icon icon-home">
+          <a href="index.html" class="icon icon-home">
             assignment2_rt_ros
           </a>
 <div role="search">
@@ -37,33 +39,35 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Indices</a></li>
-<li><a class="reference internal" href="#welcome-to-assignment2-rt-ros-s-documentation">Welcome to assignment2_rt_ros’s Documentation!</a><ul>
-<li><a class="reference internal" href="#module-go_to_point_ac">GoToPoint Module</a></li>
-<li><a class="reference internal" href="#module-get_last_target_srv">GetLastTarget Module</a></li>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">go_to_point_ac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_last_target_srv.html">get_last_target_srv</a></li>
 </ul>
 </li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">go_to_point_ac</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_last_target_srv.html">get_last_target_srv</a></li>
 </ul>
-</div>
+
         </div>
       </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">assignment2_rt_ros</a>
+          <a href="index.html">assignment2_rt_ros</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Indices</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Modules</a></li>
+      <li class="breadcrumb-item active">go_to_point_ac</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/go_to_point_ac.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -71,22 +75,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="toctree-wrapper compound">
-</div>
-<div class="section" id="indices">
-<h1>Indices<a class="headerlink" href="#indices" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
-</ul>
-</div>
-<div class="section" id="welcome-to-assignment2-rt-ros-s-documentation">
-<h1>Welcome to assignment2_rt_ros’s Documentation!<a class="headerlink" href="#welcome-to-assignment2-rt-ros-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>This package, developed for the second assignment of the RT1 course, implements an action
-client for goal navigation and a ROS service for retrieving the last target position set by the user.</p>
-<div class="section" id="module-go_to_point_ac">
-<span id="gotopoint-module"></span><h2>GoToPoint Module<a class="headerlink" href="#module-go_to_point_ac" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="module-go_to_point_ac">
+<span id="go-to-point-ac"></span><h1>go_to_point_ac<a class="headerlink" href="#module-go_to_point_ac" title="Permalink to this headline">¶</a></h1>
 <span class="target" id="module-go_to_point_ac"></span><p>This node implements an action client for reaching a given (x, y) goal.
 It subscribes to the robot’s odometry and publishes relevant state updates.</p>
 <dl class="docutils">
@@ -165,90 +155,14 @@ can cancel the goal by typing <cite>“c”</cite> and pressing Enter.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-get_last_target_srv">
-<span id="getlasttarget-module"></span><h2>GetLastTarget Module<a class="headerlink" href="#module-get_last_target_srv" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="module-get_last_target_srv"></span><p>This node implements a ROS service that allows other nodes to retrieve the last target position
-set by the user. The last target is updated through a subscriber to the <cite>/last_target</cite> topic.</p>
-<dl class="docutils">
-<dt><strong>ROS Topics:</strong></dt>
-<dd><ul class="first last simple">
-<li><dl class="first docutils">
-<dt><strong>Subscribes to</strong>:</dt>
-<dd><ul class="first last">
-<li><cite>/last_target</cite> (<cite>assignment2_rt_ros.msg.Target</cite>): Receives the latest target position.</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-<dt><strong>ROS Service:</strong></dt>
-<dd><ul class="first last simple">
-<li><dl class="first docutils">
-<dt><strong>Service Server</strong>:</dt>
-<dd><ul class="first last">
-<li><cite>get_last_target</cite> (<cite>assignment2_rt_ros.srv.GetLastTarget</cite>): Returns the last received target.</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-<dl class="function">
-<dt id="get_last_target_srv.handle_get_last_target">
-<code class="descclassname">get_last_target_srv.</code><code class="descname">handle_get_last_target</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/get_last_target_srv.html#handle_get_last_target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#get_last_target_srv.handle_get_last_target" title="Permalink to this definition">¶</a></dt>
-<dd><p>Service callback for the <cite>get_last_target</cite> service.</p>
-<p>Returns the last received target position.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> (<em>assignment2_rt_ros.srv.GetLastTargetRequest</em>) – The service request (not used).</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The response containing the last target position.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">GetLastTargetResponse</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="get_last_target_srv.main">
-<code class="descclassname">get_last_target_srv.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/get_last_target_srv.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#get_last_target_srv.main" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initializes the ROS node and sets up the subscriber and service.</p>
-<ul class="simple">
-<li><strong>Node Name</strong>: <cite>get_last_target_srv_node</cite></li>
-<li><strong>Subscribes to</strong>: <cite>/last_target</cite> (<cite>assignment2_rt_ros/Target</cite>)</li>
-<li><strong>Provides Service</strong>: <cite>get_last_target</cite> (<cite>assignment2_rt_ros/GetLastTarget</cite>)</li>
-</ul>
-<p>The node continuously listens for new target positions and serves the last recorded target
-through a ROS service.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="get_last_target_srv.target_callback">
-<code class="descclassname">get_last_target_srv.</code><code class="descname">target_callback</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/get_last_target_srv.html#target_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#get_last_target_srv.target_callback" title="Permalink to this definition">¶</a></dt>
-<dd><p>Callback function for the <cite>/last_target</cite> topic.</p>
-<p>Updates the global <cite>last_target</cite> variable whenever a new <cite>Target</cite> message is received.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<em>assignment2_rt_ros.msg.Target</em>) – The received target message containing position data.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</div>
-</div>
 
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="Modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="get_last_target_srv.html" class="btn btn-neutral float-right" title="get_last_target_srv" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

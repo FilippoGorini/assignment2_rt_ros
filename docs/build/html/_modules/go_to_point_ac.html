@@ -67,13 +67,27 @@
 <span></span><span class="ch">#! /usr/bin/env python</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">.. module:: got_to_point_ac</span>
+<span class="sd">.. module:: go_to_point_ac</span>
 <span class="sd">   :platform: Unix</span>
-<span class="sd">   :synopsis: This module contains the code for the ROS1 package of the assignment 2.</span>
+<span class="sd">   :synopsis: This module contains the ROS1 action client for sending goals and handling odometry updates.</span>
 
 <span class="sd">.. moduleauthor:: Gorini Filippo - s4828475@studenti.unige.it</span>
 
-<span class="sd">Test</span>
+<span class="sd">This node implements an action client for reaching a given (x, y) goal.</span>
+<span class="sd">It subscribes to the robot&#39;s odometry and publishes relevant state updates.</span>
+
+<span class="sd">**ROS Topics:**</span>
+<span class="sd">    - **Subscribes to**:</span>
+<span class="sd">        - `/odom` (`nav_msgs.msg.Odometry`): Receives odometry updates.</span>
+<span class="sd">    </span>
+<span class="sd">    - **Publishes to**:</span>
+<span class="sd">        - `/robot_state` (`assignment2_rt_ros.msg.RobotState`): Publishes the robot&#39;s position and velocity.</span>
+<span class="sd">        - `/last_target` (`assignment2_rt_ros.msg.Target`): Publishes the last target set by the user.</span>
+
+<span class="sd">**ROS Action:**</span>
+<span class="sd">    - **Action Client**:</span>
+<span class="sd">        - `/reaching_goal` (`assignment_2_2024.msg.PlanningAction`): Sends target goals to the action server.</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="c1"># import rospy</span>

@@ -3,67 +3,72 @@
 """
 .. module:: get_last_target_srv
    :platform: Unix
-   :synopsis: This module contains the code for the ROS1 package of the assignment 2.
+   :synopsis: ROS service node for retrieving the last target position.
 
 .. moduleauthor:: Gorini Filippo - s4828475@studenti.unige.it
 
-This is the service node written in Python for the assignment 2 of the research track course.
+This node implements a ROS service that allows other nodes to retrieve the last target position
+set by the user. The last target is updated through a subscriber to the `/last_target` topic.
+
+**ROS Topics:**
+    - **Subscribes to**:
+        - `/last_target` (`assignment2_rt_ros.msg.Target`): Receives the latest target position.
+
+**ROS Service:**
+    - **Service Server**:
+        - `get_last_target` (`assignment2_rt_ros.srv.GetLastTarget`): Returns the last received target.
 """
 
-# import rospy
-# from assignment2_rt_ros.msg import Target
-# from assignment2_rt_ros.srv import GetLastTarget, GetLastTargetResponse
 
+import rospy
+from assignment2_rt_ros.msg import Target
+from assignment2_rt_ros.srv import GetLastTarget, GetLastTargetResponse
 
 def target_callback(msg):
     """
     Callback function for the `/last_target` topic.
 
-    This function is triggered every time new data is received on the `/last_target` topic.
-    It updates the global `last_target` variable with the new `Target` message.
+    Updates the global `last_target` variable whenever a new `Target` message is received.
 
     Args:
-        msg (assignment2_rt_ros.msg.Target): The received `Target` message containing the target coordinates.
+        msg (assignment2_rt_ros.msg.Target): The received target message containing position data.
     """
     global last_target
     last_target = msg
 
-
 def handle_get_last_target(req):
     """
-    Handles a service request to get the last target.
+    Service callback for the `get_last_target` service.
 
-    This function returns the `last_target` message as the response to the client that called the service.
+    Returns the last received target position.
 
     Args:
-        req (assignment2_rt_ros.srv.GetLastTargetRequest): The request message (not used in this case).
+        req (assignment2_rt_ros.srv.GetLastTargetRequest): The service request (not used).
 
     Returns:
-        GetLastTargetResponse: The response message containing the last target data.
+        GetLastTargetResponse: The response containing the last target position.
     """
     return GetLastTargetResponse(last_target)
 
-
 def main():
     """
-    Main function that initializes the ROS node and sets up the subscriber and service.
+    Initializes the ROS node and sets up the subscriber and service.
 
-    This function:
-    - Initializes the ROS node `get_last_target_srv_node`.
-    - Creates a subscriber to the `/last_target` topic to receive updates.
-    - Creates a service `get_last_target` that allows clients to request the last target.
+    - **Node Name**: `get_last_target_srv_node`
+    - **Subscribes to**: `/last_target` (`assignment2_rt_ros/Target`)
+    - **Provides Service**: `get_last_target` (`assignment2_rt_ros/GetLastTarget`)
 
-    The function then enters a loop with `rospy.spin()` to process incoming requests.
+    The node continuously listens for new target positions and serves the last recorded target 
+    through a ROS service.
     """
-    global last_target 
+    global last_target
     last_target = Target()
-    rospy.init_node('get_last_target_srv_node')
 
+    rospy.init_node('get_last_target_srv_node')
     rospy.Subscriber('/last_target', Target, target_callback)
     rospy.Service('get_last_target', GetLastTarget, handle_get_last_target)
 
     rospy.spin()
-
 
 if __name__ == "__main__":
     main()

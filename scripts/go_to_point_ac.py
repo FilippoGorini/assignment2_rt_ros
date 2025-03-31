@@ -1,22 +1,36 @@
 #! /usr/bin/env python
 
 """
-.. module:: got_to_point_ac
+.. module:: go_to_point_ac
    :platform: Unix
-   :synopsis: This module contains the code for the ROS1 package of the assignment 2.
+   :synopsis: This module contains the ROS1 action client for sending goals and handling odometry updates.
 
 .. moduleauthor:: Gorini Filippo - s4828475@studenti.unige.it
 
-Test
+This node implements an action client for reaching a given (x, y) goal.
+It subscribes to the robot's odometry and publishes relevant state updates.
+
+**ROS Topics:**
+    - **Subscribes to**:
+        - `/odom` (`nav_msgs.msg.Odometry`): Receives odometry updates.
+    
+    - **Publishes to**:
+        - `/robot_state` (`assignment2_rt_ros.msg.RobotState`): Publishes the robot's position and velocity.
+        - `/last_target` (`assignment2_rt_ros.msg.Target`): Publishes the last target set by the user.
+
+**ROS Action:**
+    - **Action Client**:
+        - `/reaching_goal` (`assignment_2_2024.msg.PlanningAction`): Sends target goals to the action server.
+
 """
 
-# import rospy
-# import actionlib
-# from nav_msgs.msg import Odometry
-# from assignment_2_2024.msg import PlanningAction, PlanningGoal
-# from assignment2_rt_ros.msg import RobotState, Target          
-# import sys
-# import select
+import rospy
+import actionlib
+from nav_msgs.msg import Odometry
+from assignment_2_2024.msg import PlanningAction, PlanningGoal
+from assignment2_rt_ros.msg import RobotState, Target          
+import sys
+import select
 
 
 def odom_callback(msg):
