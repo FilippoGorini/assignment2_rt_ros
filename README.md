@@ -1,6 +1,7 @@
 # RT1 Assignment 2 (ROS)
 This repository contains a ROS package implementing two nodes: `go_to_point_client.py` and `get_last_target.py`. 
 These nodes interact with the Gazebo simulation provided in the package **assignment_2_2024** to control the robot movement towards a target in space set by the user.
+Detailed documentation for the package can be found at the following [link](https://filippogorini.github.io/assignment2_rt_ros/).
 
 ## Running the Nodes
 Ensure you have **ROS (Noetic or compatible)** and that the package **assignment_2_2024** is in your workspace.
