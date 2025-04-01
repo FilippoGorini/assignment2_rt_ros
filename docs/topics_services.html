@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Topics &amp; Services &mdash; assignment2_rt_ros  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Detailed Modules Documentation" href="modules.html" />
+    <link rel="prev" title="Usage" href="usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            assignment2_rt_ros
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Topics &amp; Services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#published-topics">Published Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#advertised-services">Advertised Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#action-clients">Action Clients</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Detailed Modules Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">assignment2_rt_ros</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Topics &amp; Services</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/topics_services.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="topics-services-1">
+<span id="topics-services"></span><h1>Topics &amp; Services<a class="headerlink" href="#topics-services-1" title="Permalink to this headline">¶</a></h1>
+<p>This package interacts with ROS through the following topics, services, and actions.</p>
+<div class="section" id="published-topics">
+<h2>Published Topics<a class="headerlink" href="#published-topics" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">/robot_state</span></code> (<code class="docutils literal notranslate"><span class="pre">assignment2_rt_ros/RobotState</span></code>)</dt>
+<dd>Publishes the robot’s current position (x, y), linear velocity x velocity and z angular velocity. Uses a custom message type.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">/last_target</span></code> (<code class="docutils literal notranslate"><span class="pre">assignment2_rt_ros/Target</span></code>)</dt>
+<dd>Stores and publishes the coordinates (x, y) of the last goal received by the action client. Uses a custom message type.</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="subscribed-topics">
+<h2>Subscribed Topics<a class="headerlink" href="#subscribed-topics" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">/odom</span></code> (<code class="docutils literal notranslate"><span class="pre">nav_msgs/Odometry</span></code>)</dt>
+<dd>Subscribes to the robot’s odometry information to determine its current position and velocity.</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="advertised-services">
+<h2>Advertised Services<a class="headerlink" href="#advertised-services" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt><strong>get_last_target</strong> (<code class="docutils literal notranslate"><span class="pre">assignment2_rt_ros/GetLastTarget</span></code>)</dt>
+<dd>Provides a service server that, when called, returns the last goal position (x, y) that was sent by the user/action client.</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="action-clients">
+<h2>Action Clients<a class="headerlink" href="#action-clients" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt><strong>/reaching_goal</strong> (Action Type defined in <code class="docutils literal notranslate"><span class="pre">assignment_2_2024</span></code>)</dt>
+<dd>This package implements an action <em>client</em> that sends navigation goals (target x, y coordinates) to an action <em>server</em> running on this topic. The server is expected to be provided by the <code class="docutils literal notranslate"><span class="pre">assignment_2_2024</span></code> package.</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="Detailed Modules Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Gorini Filippo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

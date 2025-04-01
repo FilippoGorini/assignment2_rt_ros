@@ -1,8 +1,0 @@
-Modules
-=======
-
-.. toctree::
-   :maxdepth: 1
-
-   go_to_point_ac
-   get_last_target_srv
